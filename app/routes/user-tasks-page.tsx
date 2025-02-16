@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation, useNavigate } from "react-router";
+import { Link, Outlet, useLocation, useNavigate, useOutlet } from "react-router";
 import { clsx } from "@/common/clsx";
 import { trpcServer } from "@/common/trpc";
 import { Trash2Icon, LogIn } from "lucide-react";
@@ -7,6 +7,7 @@ import { LuIcon } from "@/components/LuIcon";
 import { AddTaskForm } from "@/components/AddTaskForm";
 import { Route } from "./+types/user-tasks-page";
 import { trpc } from "@/common/trpc/react";
+import Modal from "@/components/modal";
 
 export const meta: Route.MetaFunction = ({
   params: { id },
@@ -159,7 +160,10 @@ export default function PageMyTasks({
         })}
       </div>
       <AddTaskForm />
-      <Outlet />
+
+      <Modal>
+        <Outlet />
+      </Modal>
     </>
   );
 }

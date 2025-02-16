@@ -1,23 +1,24 @@
-import { useNavigate } from 'react-router-dom';
-import { type PropsWithChildren } from 'react';
+import { useNavigate, useOutlet } from 'react-router-dom';
+import { Dialog, DialogContent } from './ui/dialog';
 
-export default function Modal({ children }: PropsWithChildren) {
+type Props = {
+    children: React.ReactNode;
+}
+
+
+export default function Modal({ children }: Props) {
     const navigate = useNavigate();
+    const hasOutlet = !!useOutlet()
 
     return (
-        <>
-            {/* Modal backdrop */}
-            <div
-                className="fixed inset-0 bg-black/50 z-40"
-                onClick={() => navigate(-1)}
-            />
-
-            {/* Modal content */}
-            <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-6 z-50 w-full max-w-md">
-                <div onClick={(e) => e.stopPropagation()}>
-                    {children}
-                </div>
-            </div>
-        </>
+        <Dialog open={hasOutlet} onOpenChange={open => {
+            if (!open) {
+                navigate(-1);
+            }
+        }}>
+            <DialogContent onClick={e => e.stopPropagation()}>
+                {children}
+            </DialogContent>
+        </Dialog>
     );
 }

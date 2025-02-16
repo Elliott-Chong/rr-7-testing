@@ -1,14 +1,14 @@
 import { Link } from "react-router";
-import { useMyUserInfo } from "~/hooks/useMyUserInfo";
+import { useMyUserInfo } from "@/hooks/useMyUserInfo";
 import { Home, LogIn, LogOut, User } from "lucide-react";
 import { LuIcon } from "./LuIcon";
 import { BackButton } from "./BackButton";
 import { ThemeButton } from "./ThemeButton";
-import { useLogoutMutation } from "~/hooks/request/mutation/useLogoutMutation";
+import { useClerk } from "@clerk/react-router";
 
 export const Header = () => {
   const { myUserInfo } = useMyUserInfo();
-  const logoutMutation = useLogoutMutation();
+  const { signOut } = useClerk()
 
   return (
     <div className="fixed top-0 left-0 flex w-screen items-center justify-between p-6">
@@ -23,17 +23,16 @@ export const Header = () => {
       <div className="flex items-center gap-2">
         {myUserInfo ? (
           <div className="flex items-center gap-2">
-            <Link to={`/tasks/${myUserInfo.username}`}>
+            <Link to={`/tasks/${myUserInfo.id}`}>
               <button className="btn btn-sm">
                 <LuIcon icon={User} />
-                {myUserInfo.username}
+                {`${myUserInfo.firstName} ${myUserInfo.lastName}`}
               </button>
             </Link>
             <button
               className="btn btn-sm"
-              disabled={logoutMutation.isPending}
               onClick={() => {
-                logoutMutation.mutateAsync();
+                signOut()
               }}
             >
               <LuIcon icon={LogOut} />

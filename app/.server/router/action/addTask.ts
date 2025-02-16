@@ -1,6 +1,6 @@
-import { db } from "~/.server/db";
-import { p } from "~/.server/trpc";
-import { addTaskFormSchema } from "~/common/formSchema";
+import { db } from "@/.server/db";
+import { p } from "@/.server/trpc";
+import { addTaskFormSchema } from "@/common/formSchema";
 
 export const addTask = p.auth
   .input(addTaskFormSchema)

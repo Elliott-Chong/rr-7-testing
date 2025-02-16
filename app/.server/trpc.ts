@@ -1,11 +1,21 @@
 import { TRPCError, initTRPC } from "@trpc/server";
 import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import SuperJSON from "superjson";
-import { getMyUserInfo } from "./auth";
+import { db } from "./db";
+import { getAuth } from "@clerk/react-router/ssr.server";
 
 // insert userInfo to trpc ctx
 export const createContext = async (ctx: FetchCreateContextFnOptions) => {
-  const myUserInfo = await getMyUserInfo(ctx.req);
+  const { userId } = await getAuth({
+    request: ctx.req,
+    context: {},
+    params: {}
+  })
+  const myUserInfo = await db.user.findUnique({
+    where: {
+      id: userId ?? ""
+    }
+  })
   return { ...ctx, myUserInfo, userId: myUserInfo?.id };
 };
 

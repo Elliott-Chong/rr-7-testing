@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { IS_PROD } from "~/common/constants";
+import { IS_PROD } from "@/common/constants";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;

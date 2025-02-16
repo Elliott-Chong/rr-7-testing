@@ -1,20 +1,18 @@
-import { Link } from "react-router";
-import { clsx } from "~/common/clsx";
-import { trpcServer } from "~/common/trpc";
+import { Link, Outlet, useLocation, useNavigate } from "react-router";
+import { clsx } from "@/common/clsx";
+import { trpcServer } from "@/common/trpc";
 import { Trash2Icon, LogIn } from "lucide-react";
-import { Title } from "~/components/Title";
-import { LuIcon } from "~/components/LuIcon";
-import { useUnDoneTaskMutation } from "~/hooks/request/mutation/useUnDoneTaskMutation";
-import { useDoneTaskMutation } from "~/hooks/request/mutation/useDoneTaskMutation";
-import { useDeleteTaskMutation } from "~/hooks/request/mutation/useDeleteTaskMutation";
-import { AddTaskForm } from "~/components/AddTaskForm";
-import { Route } from "./+types/tasks.$username";
+import { Title } from "@/components/Title";
+import { LuIcon } from "@/components/LuIcon";
+import { AddTaskForm } from "@/components/AddTaskForm";
+import { Route } from "./+types/user-tasks-page";
+import { trpc } from "@/common/trpc/react";
 
 export const meta: Route.MetaFunction = ({
-  params: { username },
-  data: { myTaskList, isSelf, myUserInfo },
+  params: { id },
+  data: { myTaskList, isSelf, user },
 }) => {
-  if (!myUserInfo) {
+  if (!user) {
     return [{ title: "page need login | remix-t3-stack" }];
   }
   if (!isSelf) {
@@ -24,37 +22,37 @@ export const meta: Route.MetaFunction = ({
   const unDoneTasksLength = myTaskList?.filter((e) => !e.done).length || 0;
   return [
     {
-      title: `${unDoneTasksLength ? `(${unDoneTasksLength}) ` : ""}${username}'s Tasks | remix-t3-stack`,
+      title: `${unDoneTasksLength ? `(${unDoneTasksLength}) ` : ""}${id}'s Tasks | remix-t3-stack`,
     },
   ];
 };
 
 export const loader = async ({
-  params: { username },
+  params: { id },
   request,
 }: Route.LoaderArgs) => {
-  const { myUserInfo } = await trpcServer(request).loader.getMyUserInfo.query();
+  const user = await trpcServer(request).user.getMyUserInfo.query();
 
-  const isSelf = !!myUserInfo && username === myUserInfo.username;
+  const isSelf = !!user && id === user.id;
 
   if (isSelf) {
     const { myTaskList } =
       await trpcServer(request).loader.getMyTaskList.query();
-    return { myTaskList, isSelf, myUserInfo };
+    return { myTaskList, isSelf, user };
   }
 
-  return { myTaskList: [], isSelf, myUserInfo };
+  return { myTaskList: [], isSelf, user };
 };
 
 export default function PageMyTasks({
-  params: { username },
-  loaderData: { myTaskList, isSelf, myUserInfo },
+  params: { id },
+  loaderData: { myTaskList, isSelf, user },
 }: Route.ComponentProps) {
-  const unDoneTaskMutation = useUnDoneTaskMutation();
-  const doneTaskMutation = useDoneTaskMutation();
-  const deleteTaskMutation = useDeleteTaskMutation();
+  const unDoneTaskMutation = trpc.action.unDoneTask.useMutation()
+  const doneTaskMutation = trpc.action.doneTask.useMutation()
+  const deleteTaskMutation = trpc.action.deleteTask.useMutation()
 
-  if (!myUserInfo) {
+  if (!user) {
     return (
       <>
         <Title>Page Need Login</Title>
@@ -67,14 +65,17 @@ export default function PageMyTasks({
       </>
     );
   }
+  const location = useLocation()
+  const nav = useNavigate()
+
 
   if (!isSelf) {
     return (
       <>
         <Title>
-          No Permission To Access Todolist Of Other User ({username})
+          No Permission To Access Todolist Of Other User ({user.firstName} {user.lastName})
         </Title>
-        <Link to={`/tasks/${myUserInfo?.username}`}>
+        <Link to={`/tasks/${user?.id}`}>
           <button className="btn">View My Tasks</button>
         </Link>
       </>
@@ -115,7 +116,7 @@ export default function PageMyTasks({
                     className="checkbox-success checkbox"
                     defaultChecked={done}
                     disabled={
-                      unDoneTaskMutation.isPending || doneTaskMutation.isPending
+                      unDoneTaskMutation.isLoading || doneTaskMutation.isLoading
                     }
                     onClick={async () => {
                       if (done) {
@@ -139,7 +140,7 @@ export default function PageMyTasks({
                   </div>
                   <button
                     className="btn btn-circle btn-ghost btn-sm"
-                    disabled={deleteTaskMutation.isPending}
+                    disabled={deleteTaskMutation.isLoading}
                     onClick={async (e) => {
                       e.stopPropagation();
                       await deleteTaskMutation.mutateAsync({ taskId });
@@ -158,6 +159,7 @@ export default function PageMyTasks({
         })}
       </div>
       <AddTaskForm />
+      <Outlet />
     </>
   );
 }

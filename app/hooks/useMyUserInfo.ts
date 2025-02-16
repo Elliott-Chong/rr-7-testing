@@ -1,13 +1,7 @@
-import { useLoaderData, useOutletContext } from "react-router";
-import { loader } from "~/root";
-import { IMyUserInfo } from "~/.server/auth";
+import { trpc } from "@/common/trpc/react";
 
 export const useMyUserInfo = () => {
-  const ctx = useOutletContext<{ myUserInfo: IMyUserInfo } | null>();
-  const rootLoaderData = useLoaderData<typeof loader>() || {};
-
-  // page use ctx, component use rootLoaderData
-  const myUserInfo = ctx ? ctx.myUserInfo : rootLoaderData.myUserInfo;
+  const { data: myUserInfo } = trpc.user.getMyUserInfo.useQuery()
 
   return { myUserInfo };
 };

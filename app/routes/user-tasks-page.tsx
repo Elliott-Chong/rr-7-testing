@@ -7,7 +7,8 @@ import { LuIcon } from "@/components/LuIcon";
 import { AddTaskForm } from "@/components/AddTaskForm";
 import { Route } from "./+types/user-tasks-page";
 import { trpc } from "@/common/trpc/react";
-import Modal from "@/components/modal";
+import RouteModal from "@/components/route-modal";
+import RouteSheet from "@/components/route-sheet";
 
 export const meta: Route.MetaFunction = ({
   params: { id },
@@ -161,9 +162,9 @@ export default function PageMyTasks({
       </div>
       <AddTaskForm />
 
-      <Modal>
+      <RouteSheet title="Add Task" description="Add a new task">
         <Outlet />
-      </Modal>
+      </RouteSheet>
     </>
   );
 }

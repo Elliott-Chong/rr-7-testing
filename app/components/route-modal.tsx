@@ -6,7 +6,7 @@ type Props = {
 }
 
 
-export default function Modal({ children }: Props) {
+export default function RouteModal({ children }: Props) {
     const navigate = useNavigate();
     const hasOutlet = !!useOutlet()
 

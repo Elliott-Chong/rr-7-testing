@@ -1,6 +1,6 @@
 import { reactRouter } from "@react-router/dev/vite";
-import { barrel } from 'vite-plugin-barrel'
 import tailwindcss from "@tailwindcss/vite";
+import lucideReactImportOptimizer from "./lucide-react-import-optimiser";
 import path from "path";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -11,7 +11,7 @@ export default defineConfig({
     tailwindcss(),
     reactRouter(),
     tsconfigPaths(),
-    barrel({ packages: ['lucide-react'] }),
+    // lucideReactImportOptimizer()
   ],
   define: {
     "process.env": process.env,

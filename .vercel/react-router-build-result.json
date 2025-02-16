@@ -1,0 +1,172 @@
+{
+  "buildManifest": {
+    "serverBundles": {
+      "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0": {
+        "id": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+        "file": "build/server/nodejs-eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    },
+    "routeIdToServerBundleId": {
+      "routes/register.$": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/sync-user": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/tasks.$id": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/tasks.$id.add": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/login.$": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/_index": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/trpc.$": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/$": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0"
+    },
+    "routes": {
+      "root": {
+        "path": "",
+        "id": "root",
+        "file": "app/root.tsx",
+        "config": {}
+      },
+      "routes/register.$": {
+        "id": "routes/register.$",
+        "parentId": "root",
+        "file": "app/routes/register.$.tsx",
+        "path": "register/*",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/sync-user": {
+        "id": "routes/sync-user",
+        "parentId": "root",
+        "file": "app/routes/sync-user.tsx",
+        "path": "sync-user",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/tasks.$id": {
+        "id": "routes/tasks.$id",
+        "parentId": "root",
+        "file": "app/routes/tasks.$id.tsx",
+        "path": "tasks/:id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/tasks.$id.add": {
+        "id": "routes/tasks.$id.add",
+        "parentId": "routes/tasks.$id",
+        "file": "app/routes/tasks.$id.add.tsx",
+        "path": "add",
+        "config": {}
+      },
+      "routes/login.$": {
+        "id": "routes/login.$",
+        "parentId": "root",
+        "file": "app/routes/login.$.tsx",
+        "path": "login/*",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/_index": {
+        "id": "routes/_index",
+        "parentId": "root",
+        "file": "app/routes/_index.tsx",
+        "index": true,
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/trpc.$": {
+        "id": "routes/trpc.$",
+        "parentId": "root",
+        "file": "app/routes/trpc.$.tsx",
+        "path": "trpc/*",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/$": {
+        "id": "routes/$",
+        "parentId": "root",
+        "file": "app/routes/$.tsx",
+        "path": "*",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    }
+  },
+  "reactRouterConfig": {
+    "appDirectory": "/Users/elliott/Documents/Coding/remix-t3-stack/app",
+    "basename": "/",
+    "buildDirectory": "/Users/elliott/Documents/Coding/remix-t3-stack/build",
+    "future": {
+      "unstable_optimizeDeps": false
+    },
+    "routes": {
+      "root": {
+        "path": "",
+        "id": "root",
+        "file": "root.tsx"
+      },
+      "routes/register.$": {
+        "id": "routes/register.$",
+        "parentId": "root",
+        "file": "routes/register.$.tsx",
+        "path": "register/*"
+      },
+      "routes/sync-user": {
+        "id": "routes/sync-user",
+        "parentId": "root",
+        "file": "routes/sync-user.tsx",
+        "path": "sync-user"
+      },
+      "routes/tasks.$id": {
+        "id": "routes/tasks.$id",
+        "parentId": "root",
+        "file": "routes/tasks.$id.tsx",
+        "path": "tasks/:id"
+      },
+      "routes/tasks.$id.add": {
+        "id": "routes/tasks.$id.add",
+        "parentId": "routes/tasks.$id",
+        "file": "routes/tasks.$id.add.tsx",
+        "path": "add"
+      },
+      "routes/login.$": {
+        "id": "routes/login.$",
+        "parentId": "root",
+        "file": "routes/login.$.tsx",
+        "path": "login/*"
+      },
+      "routes/_index": {
+        "id": "routes/_index",
+        "parentId": "root",
+        "file": "routes/_index.tsx",
+        "index": true
+      },
+      "routes/trpc.$": {
+        "id": "routes/trpc.$",
+        "parentId": "root",
+        "file": "routes/trpc.$.tsx",
+        "path": "trpc/*"
+      },
+      "routes/$": {
+        "id": "routes/$",
+        "parentId": "root",
+        "file": "routes/$.tsx",
+        "path": "*"
+      }
+    },
+    "serverBuildFile": "index.js",
+    "serverModuleFormat": "esm",
+    "ssr": true
+  },
+  "viteConfig": {
+    "build": {
+      "assetsDir": "assets"
+    }
+  }
+}

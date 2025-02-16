@@ -1,7 +1,7 @@
 import { Title } from "@/components/Title";
 import { useMyUserInfo } from "@/hooks/useMyUserInfo";
 import { BackButton } from "@/components/BackButton";
-import { Route } from "./+types/register-page";
+import { Route } from "./+types/register.$";
 import { SignUp } from "@clerk/react-router";
 
 export const meta: Route.MetaFunction = () => {

@@ -15,9 +15,6 @@ export const createQueryClient = () => {
         staleTime: 30 * 1000,
       },
       mutations: {
-        onSuccess: () => {
-          revalidate()
-        },
         onError: error => {
           if (error instanceof Error) {
             OnTRPCError(error)

@@ -6,7 +6,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate, useOutlet } from "react-router";
 
 type Props = {
@@ -15,15 +15,15 @@ type Props = {
   description: string;
 }
 const RouteSheet = ({ children, title, description }: Props) => {
-  const open = !!useOutlet()
   const navigate = useNavigate()
+  const [open, setOpen] = useState(true)
   return (
-    <Sheet open={open} onOpenChange={open => {
-      if (!open) {
-        navigate(-1);
-      }
-    }}>
-      <SheetContent>
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetContent onAnimationEnd={() => {
+        if (!open) {
+          navigate(-1)
+        }
+      }}>
         <SheetHeader>
           <SheetTitle>
             {title}

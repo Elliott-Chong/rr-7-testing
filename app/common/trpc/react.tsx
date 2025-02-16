@@ -4,11 +4,12 @@ import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 import { httpBatchLink, loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
 import { createTRPCReact, inferReactQueryProcedureOptions } from "@trpc/react-query";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
-import { useState } from "react";
+import { useState, createContext, useContext } from "react";
 import SuperJSON from "superjson";
 
 import { type AppRouter } from "@/.server/router";
 import { createQueryClient } from "./query-client";
+import { useRevalidator } from "react-router";
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined;
 const getQueryClient = () => {
@@ -20,7 +21,21 @@ const getQueryClient = () => {
     return (clientQueryClientSingleton ??= createQueryClient());
 };
 
-export const trpc = createTRPCReact<AppRouter>();
+
+export const trpc = createTRPCReact<AppRouter>({
+    overrides: {
+        useMutation: {
+            onSuccess(opts) {
+                // Get revalidator from context
+                const context = opts.queryClient.getQueryData(['__revalidator']) as ReturnType<typeof useRevalidator> | undefined;
+                if (context) {
+                    context.revalidate();
+                }
+                opts.originalFn();
+            },
+        }
+    }
+});
 
 /**
  * Inference helper for inputs.
@@ -38,6 +53,10 @@ export type RouterOutputs = inferRouterOutputs<AppRouter>;
 
 export function TRPCReactProvider(props: { children: React.ReactNode }) {
     const queryClient = getQueryClient();
+    const revalidator = useRevalidator();
+
+    // Store revalidator in query client
+    queryClient.setQueryData(['__revalidator'], revalidator);
 
     const trpcClient = trpc.createClient({
         transformer: SuperJSON,
@@ -55,6 +74,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
             }),
         ],
     })
+
 
     return (
         <QueryClientProvider client={queryClient}>

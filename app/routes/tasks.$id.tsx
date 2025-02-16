@@ -5,10 +5,8 @@ import { Trash2Icon, LogIn } from "lucide-react";
 import { Title } from "@/components/Title";
 import { LuIcon } from "@/components/LuIcon";
 import { AddTaskForm } from "@/components/AddTaskForm";
-import { Route } from "./+types/user-tasks-page";
+import { Route } from "./+types/tasks.$id";
 import { trpc } from "@/common/trpc/react";
-import RouteModal from "@/components/route-modal";
-import RouteSheet from "@/components/route-sheet";
 
 export const meta: Route.MetaFunction = ({
   params: { id },
@@ -67,9 +65,6 @@ export default function PageMyTasks({
       </>
     );
   }
-  const location = useLocation()
-  const nav = useNavigate()
-
 
   if (!isSelf) {
     return (
@@ -162,9 +157,7 @@ export default function PageMyTasks({
       </div>
       <AddTaskForm />
 
-      <RouteSheet title="Add Task" description="Add a new task">
-        <Outlet />
-      </RouteSheet>
+      <Outlet />
     </>
   );
 }

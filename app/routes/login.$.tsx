@@ -6,7 +6,7 @@ import { LuIcon } from "@/components/LuIcon";
 import { LogIn } from "lucide-react";
 import { BackButton } from "@/components/BackButton";
 import { loginFormSchema } from "@/common/formSchema";
-import { Route } from "./+types/login-page";
+import { Route } from "./+types/login.$";
 import { trpc } from "@/common/trpc/react";
 import { SignIn } from "@clerk/react-router";
 

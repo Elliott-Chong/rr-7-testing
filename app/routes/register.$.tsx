@@ -1,11 +1,8 @@
 import { SignUp } from "@clerk/react-router";
 import { Route } from "./+types/register.$";
-import { BackButton } from "@/components/BackButton";
 import { Title } from "@/components/Title";
 import { useUser } from "@/hooks/useUser";
 import { BackButton } from "@/components/BackButton";
-import { Route } from "./+types/register.$";
-import { SignUp } from "@clerk/react-router";
 
 export const meta: Route.MetaFunction = () => {
   return [{ title: "register account | remix-t3-stack" }];

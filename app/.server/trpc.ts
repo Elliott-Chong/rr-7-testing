@@ -6,8 +6,6 @@ import { db } from "./db";
 
 // insert userInfo to trpc ctx
 export const createContext = async (ctx: FetchCreateContextFnOptions) => {
-  console.log("HELLO!");
-
   const { userId } = await getAuth({
     request: ctx.req,
     context: {},

@@ -14,7 +14,6 @@ const getQueryClient = () => {
     // Server: always make a new query client
     return createQueryClient();
   }
-
   // Browser: use singleton pattern to keep the same query client
   return (clientQueryClientSingleton ??= createQueryClient());
 };
@@ -27,11 +26,9 @@ export const trpc = createTRPCReact<AppRouter>({
         const context = opts.queryClient.getQueryData(["__revalidator"]) as
           | ReturnType<typeof useRevalidator>
           | undefined;
-
         if (context) {
           context.revalidate();
         }
-
         opts.originalFn();
       },
     },
@@ -85,13 +82,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
 }
 
 function getBaseUrl() {
-  if (typeof window !== "undefined") {
-    return window.location.origin;
-  }
-
-  if (process.env.BASE_URL) {
-    return `https://${process.env.BASE_URL}`;
-  }
-
+  if (typeof window !== "undefined") return window.location.origin;
+  if (process.env.BASE_URL) return `https://${process.env.BASE_URL}`;
   return `http://localhost:${process.env.PORT ?? 3000}`;
 }

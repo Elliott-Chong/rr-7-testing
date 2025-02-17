@@ -4,10 +4,10 @@ import { Link } from "react-router";
 import { BackButton } from "./BackButton";
 import { LuIcon } from "./LuIcon";
 import { ThemeButton } from "./ThemeButton";
-import { useMyUserInfo } from "@/hooks/useMyUserInfo";
+import { useUser } from "@/hooks/useUser";
 
 export const Header = () => {
-  const { myUserInfo } = useMyUserInfo();
+  const { user } = useUser();
   const { signOut } = useClerk();
 
   return (
@@ -21,12 +21,12 @@ export const Header = () => {
         <BackButton className="btn-sm" />
       </div>
       <div className="flex items-center gap-2">
-        {myUserInfo ? (
+        {user ? (
           <div className="flex items-center gap-2">
-            <Link to={`/tasks/${myUserInfo.id}`}>
+            <Link to={`/tasks/${user.id}`}>
               <button className="btn btn-sm">
                 <LuIcon icon={User} />
-                {`${myUserInfo.firstName} ${myUserInfo.lastName}`}
+                {`${user.firstName} ${user.lastName}`}
               </button>
             </Link>
             <button

@@ -7,7 +7,7 @@ import { trpc } from "@/common/trpc/react";
 import { BackButton } from "@/components/BackButton";
 import { LuIcon } from "@/components/LuIcon";
 import { Title } from "@/components/Title";
-import { useMyUserInfo } from "@/hooks/useMyUserInfo";
+import { useUser } from "@/hooks/useUser";
 import { Controller, useZodForm } from "@/hooks/useZodForm";
 
 export const meta: Route.MetaFunction = () => {
@@ -15,13 +15,13 @@ export const meta: Route.MetaFunction = () => {
 };
 
 export default function PageLogin() {
-  const { myUserInfo } = useMyUserInfo();
+  const { user } = useUser();
 
-  if (myUserInfo) {
+  if (user) {
     return (
       <>
         <Title>
-          Welcome {myUserInfo?.firstName} {myUserInfo?.lastName}, You Have Already Login
+          Welcome {user?.firstName} {user?.lastName}, You Have Already Login
         </Title>
         <BackButton />
       </>

@@ -10,10 +10,15 @@ import { TRPCReactProvider } from "./common/trpc/react";
 import { Header } from "./components/Header";
 import { Toaster } from "./components/Toaster";
 import stylesheet from "./global.css?url";
+import { trpcServer } from "./common/trpc";
 
 export const links: Route.LinksFunction = () => [{ rel: "stylesheet", href: stylesheet }];
 
-export const loader = (args: Route.LoaderArgs) => rootAuthLoader(args);
+export const loader = (args: Route.LoaderArgs) =>
+  rootAuthLoader(args, async () => {
+    const user = await trpcServer(args.request).user.getMyUserInfo.query();
+    return { user };
+  });
 
 export const Layout = ({ children }: { children: ReactNode }) => {
   return (
@@ -34,6 +39,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 };
 
 export default function App({ loaderData }: Route.ComponentProps) {
+  // console.log("loaderData", loaderData);
   return (
     <ClerkProvider loaderData={loaderData} signInFallbackRedirectUrl="/" signUpForceRedirectUrl={"/sync-user"}>
       <ThemeProvider attribute="data-theme" defaultTheme="light">

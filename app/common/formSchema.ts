@@ -23,12 +23,10 @@ const registerFormFields = {
   password2: password2Schema,
 };
 
-export const registerFormSchema = z
-  .object(registerFormFields)
-  .refine((data) => data.password === data.password2, {
-    message: "The two passwords you entered do not match",
-    path: ["password2"],
-  });
+export const registerFormSchema = z.object(registerFormFields).refine((data) => data.password === data.password2, {
+  message: "The two passwords you entered do not match",
+  path: ["password2"],
+});
 
 // taskForm schema
 const contentSchema = z

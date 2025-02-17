@@ -1,25 +1,24 @@
-import { Link, Outlet, useLocation, useNavigate, useOutlet } from "react-router";
+import { Trash2Icon, LogIn } from "lucide-react";
+import { Link, Outlet } from "react-router";
+import { Route } from "./+types/tasks.$id";
 import { clsx } from "@/common/clsx";
 import { trpcServer } from "@/common/trpc";
-import { Trash2Icon, LogIn } from "lucide-react";
-import { Title } from "@/components/Title";
-import { LuIcon } from "@/components/LuIcon";
-import { AddTaskForm } from "@/components/AddTaskForm";
-import { Route } from "./+types/tasks.$id";
 import { trpc } from "@/common/trpc/react";
+import { AddTaskForm } from "@/components/AddTaskForm";
+import { LuIcon } from "@/components/LuIcon";
+import { Title } from "@/components/Title";
 
-export const meta: Route.MetaFunction = ({
-  params: { id },
-  data: { myTaskList, isSelf, user },
-}) => {
+export const meta: Route.MetaFunction = ({ params: { id }, data: { myTaskList, isSelf, user } }) => {
   if (!user) {
     return [{ title: "page need login | remix-t3-stack" }];
   }
+
   if (!isSelf) {
     return [{ title: "no view permission | remix-t3-stack" }];
   }
 
   const unDoneTasksLength = myTaskList?.filter((e) => !e.done).length || 0;
+
   return [
     {
       title: `${unDoneTasksLength ? `(${unDoneTasksLength}) ` : ""}${id}'s Tasks | remix-t3-stack`,
@@ -27,30 +26,23 @@ export const meta: Route.MetaFunction = ({
   ];
 };
 
-export const loader = async ({
-  params: { id },
-  request,
-}: Route.LoaderArgs) => {
+export const loader = async ({ params: { id }, request }: Route.LoaderArgs) => {
   const user = await trpcServer(request).user.getMyUserInfo.query();
 
   const isSelf = !!user && id === user.id;
 
   if (isSelf) {
-    const { myTaskList } =
-      await trpcServer(request).loader.getMyTaskList.query();
+    const { myTaskList } = await trpcServer(request).loader.getMyTaskList.query();
     return { myTaskList, isSelf, user };
   }
 
   return { myTaskList: [], isSelf, user };
 };
 
-export default function PageMyTasks({
-  params: { id },
-  loaderData: { myTaskList, isSelf, user },
-}: Route.ComponentProps) {
-  const unDoneTaskMutation = trpc.action.unDoneTask.useMutation()
-  const doneTaskMutation = trpc.action.doneTask.useMutation()
-  const deleteTaskMutation = trpc.action.deleteTask.useMutation()
+export default function PageMyTasks({ loaderData: { myTaskList, isSelf, user } }: Route.ComponentProps) {
+  const unDoneTaskMutation = trpc.action.unDoneTask.useMutation();
+  const doneTaskMutation = trpc.action.doneTask.useMutation();
+  const deleteTaskMutation = trpc.action.deleteTask.useMutation();
 
   if (!user) {
     return (
@@ -112,9 +104,7 @@ export default function PageMyTasks({
                     type="checkbox"
                     className="checkbox-success checkbox"
                     defaultChecked={done}
-                    disabled={
-                      unDoneTaskMutation.isLoading || doneTaskMutation.isLoading
-                    }
+                    disabled={unDoneTaskMutation.isLoading || doneTaskMutation.isLoading}
                     onClick={async () => {
                       if (done) {
                         await unDoneTaskMutation.mutateAsync({ taskId });
@@ -143,11 +133,7 @@ export default function PageMyTasks({
                       await deleteTaskMutation.mutateAsync({ taskId });
                     }}
                   >
-                    <Trash2Icon
-                      size={20}
-                      strokeWidth={1.5}
-                      className="text-gray-500"
-                    />
+                    <Trash2Icon size={20} strokeWidth={1.5} className="text-gray-500" />
                   </button>
                 </div>
               </div>

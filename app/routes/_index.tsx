@@ -1,8 +1,8 @@
 import { Link } from "react-router";
+import { Route } from "./+types/_index";
 import { trpcServer } from "@/common/trpc";
 import { RegisterButton } from "@/components/RegisterButton";
 import { Title } from "@/components/Title";
-import { Route } from "./+types/_index";
 
 export const meta: Route.MetaFunction = () => {
   return [{ title: "remix-t3-stack" }];
@@ -14,9 +14,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   return { userList };
 };
 
-export default function PageHome({
-  loaderData: { userList },
-}: Route.ComponentProps) {
+export default function PageHome({ loaderData: { userList } }: Route.ComponentProps) {
   if (!userList.length) {
     return (
       <>

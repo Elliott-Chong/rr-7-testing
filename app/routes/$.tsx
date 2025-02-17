@@ -1,6 +1,6 @@
-import { Title } from "@/components/Title";
-import { BackButton } from "@/components/BackButton";
 import { Route } from "./+types/$";
+import { BackButton } from "@/components/BackButton";
+import { Title } from "@/components/Title";
 
 export const meta: Route.MetaFunction = () => {
   return [{ title: "page not found | remix-t3-stack" }];

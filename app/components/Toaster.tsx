@@ -1,5 +1,5 @@
-import { Toaster as ReactToaster } from "react-hot-toast";
 import { AlertCircle, Bell, CheckCircle } from "lucide-react";
+import { Toaster as ReactToaster } from "react-hot-toast";
 import { LuIcon } from "./LuIcon";
 
 export const Toaster = () => {

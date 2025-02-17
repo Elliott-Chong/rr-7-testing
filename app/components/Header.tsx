@@ -1,14 +1,14 @@
-import { Link } from "react-router";
-import { useMyUserInfo } from "@/hooks/useMyUserInfo";
-import { Home, LogIn, LogOut, User } from "lucide-react";
-import { LuIcon } from "./LuIcon";
-import { BackButton } from "./BackButton";
-import { ThemeButton } from "./ThemeButton";
 import { useClerk } from "@clerk/react-router";
+import { Home, LogIn, LogOut, User } from "lucide-react";
+import { Link } from "react-router";
+import { BackButton } from "./BackButton";
+import { LuIcon } from "./LuIcon";
+import { ThemeButton } from "./ThemeButton";
+import { useMyUserInfo } from "@/hooks/useMyUserInfo";
 
 export const Header = () => {
   const { myUserInfo } = useMyUserInfo();
-  const { signOut } = useClerk()
+  const { signOut } = useClerk();
 
   return (
     <div className="fixed top-0 left-0 flex w-screen items-center justify-between p-6">
@@ -32,7 +32,7 @@ export const Header = () => {
             <button
               className="btn btn-sm"
               onClick={() => {
-                signOut()
+                signOut();
               }}
             >
               <LuIcon icon={LogOut} />

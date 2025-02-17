@@ -3,17 +3,17 @@ import { IS_PROD, COOKIE_MAX_AGE } from "@/common/constants";
 
 const getCookie = (req: Request, name: string, options?: ParseOptions) => {
   const cookieHeader = req.headers.get("Cookie");
-  if (!cookieHeader) return "";
+
+  if (!cookieHeader) {
+    return "";
+  }
+
   const cookies = cookie.parse(cookieHeader, options);
+
   return cookies[name] as string;
 };
 
-const setCookie = (
-  resHeaders: Headers,
-  name: string,
-  value: string,
-  options?: SerializeOptions,
-) => {
+const setCookie = (resHeaders: Headers, name: string, value: string, options?: SerializeOptions) => {
   resHeaders.set(
     "Set-Cookie",
     cookie.serialize(name, value, {
@@ -27,11 +27,7 @@ const setCookie = (
   );
 };
 
-const deleteCookie = (
-  resHeaders: Headers,
-  name: string,
-  options?: SerializeOptions,
-) => {
+const deleteCookie = (resHeaders: Headers, name: string, options?: SerializeOptions) => {
   resHeaders.set(
     "Set-Cookie",
     cookie.serialize(name, "", {

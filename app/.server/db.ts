@@ -11,4 +11,6 @@ export const db =
     log: ["error"],
   });
 
-if (!IS_PROD) globalForPrisma.prisma = db;
+if (!IS_PROD) {
+  globalForPrisma.prisma = db;
+}

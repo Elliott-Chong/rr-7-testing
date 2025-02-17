@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { useMyUserInfo } from "@/hooks/useMyUserInfo";
+import { useUser } from "@/hooks/useUser";
 import { Home, LogIn, LogOut, User } from "lucide-react";
 import { LuIcon } from "./LuIcon";
 import { BackButton } from "./BackButton";
@@ -7,8 +7,8 @@ import { ThemeButton } from "./ThemeButton";
 import { useClerk } from "@clerk/react-router";
 
 export const Header = () => {
-  const { myUserInfo } = useMyUserInfo();
-  const { signOut } = useClerk()
+  const { user } = useUser();
+  const { signOut } = useClerk();
 
   return (
     <div className="fixed top-0 left-0 flex w-screen items-center justify-between p-6">
@@ -21,18 +21,18 @@ export const Header = () => {
         <BackButton className="btn-sm" />
       </div>
       <div className="flex items-center gap-2">
-        {myUserInfo ? (
+        {user ? (
           <div className="flex items-center gap-2">
-            <Link to={`/tasks/${myUserInfo.id}`}>
+            <Link to={`/tasks/${user.id}`}>
               <button className="btn btn-sm">
                 <LuIcon icon={User} />
-                {`${myUserInfo.firstName} ${myUserInfo.lastName}`}
+                {`${user.firstName} ${user.lastName}`}
               </button>
             </Link>
             <button
               className="btn btn-sm"
               onClick={() => {
-                signOut()
+                signOut();
               }}
             >
               <LuIcon icon={LogOut} />

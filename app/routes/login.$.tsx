@@ -1,4 +1,4 @@
-import { useMyUserInfo } from "@/hooks/useMyUserInfo";
+import { useUser } from "@/hooks/useUser";
 import { Controller, useZodForm } from "@/hooks/useZodForm";
 import { clsx } from "@/common/clsx";
 import { Title } from "@/components/Title";
@@ -15,12 +15,14 @@ export const meta: Route.MetaFunction = () => {
 };
 
 export default function PageLogin() {
-  const { myUserInfo } = useMyUserInfo();
+  const { myUserInfo } = useUser();
 
   if (myUserInfo) {
     return (
       <>
-        <Title>Welcome {myUserInfo?.firstName} {myUserInfo?.lastName}, You Have Already Login</Title>
+        <Title>
+          Welcome {myUserInfo?.firstName} {myUserInfo?.lastName}, You Have Already Login
+        </Title>
         <BackButton />
       </>
     );

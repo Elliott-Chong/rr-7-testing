@@ -1,5 +1,5 @@
 import { Toaster as ReactToaster } from "react-hot-toast";
-import { Bell, CheckCircle, CircleAlert } from "lucide-react";
+import { AlertCircle, Bell, CheckCircle } from "lucide-react";
 import { LuIcon } from "./LuIcon";
 
 export const Toaster = () => {
@@ -14,7 +14,7 @@ export const Toaster = () => {
           },
         },
         error: {
-          icon: <LuIcon icon={CircleAlert} className="ml-2" />,
+          icon: <LuIcon icon={AlertCircle} className="ml-2" />,
           style: {
             background: "red",
           },

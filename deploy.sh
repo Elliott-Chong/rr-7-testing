@@ -1,7 +1,6 @@
-pnpm i
-pnpm db:gen
-pnpm build
-pnpm i --prod
+bun i
+bun run db:gen
+bun run build
 
 docker stop todolist-app
 docker rm todolist-app

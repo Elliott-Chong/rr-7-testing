@@ -76,6 +76,7 @@ export default function PageMyTasks({ loaderData: { myTaskList, isSelf, user } }
       <>
         <Title>No One Task Yet</Title>
         <AddTaskForm />
+        <Outlet />
       </>
     );
   }
@@ -118,10 +119,10 @@ export default function PageMyTasks({ loaderData: { myTaskList, isSelf, user } }
 
                 <div className="flex items-center gap-2">
                   <div className="flex flex-col">
-                    <div className="text-sm font-light text-gray-400">
+                    <div className="text-sm font-light text-gray-400" suppressHydrationWarning>
                       create at {new Date(createdAt).toLocaleString()}
                     </div>
-                    <div className="text-sm font-light text-gray-400">
+                    <div className="text-sm font-light text-gray-400" suppressHydrationWarning>
                       update at {new Date(updatedAt).toLocaleString()}
                     </div>
                   </div>

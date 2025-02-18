@@ -34,9 +34,10 @@ export default function PageHome({ loaderData: { userList } }: Route.ComponentPr
               <Link to={`/tasks/${id}`}>
                 <div className="border-base-300 hover:bg-base-200 flex flex-col rounded-lg border px-4 py-2 transition-all">
                   <div className="text-lg">{`${firstName} ${lastName}`}</div>
-                  <div className="text-sm font-light text-gray-400">
+                  <div className="text-sm font-light text-gray-400" suppressHydrationWarning>
                     create at {new Date(createdAt).toLocaleString()}
                   </div>
+
                 </div>
               </Link>
             </div>

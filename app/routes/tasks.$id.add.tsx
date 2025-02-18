@@ -13,8 +13,7 @@ const AddTaskModal = () => {
 
   return (
     <>
-      <Button>Hello</Button>
-      {/* <RouteModal title="Add Task" description="Add a new task" abortController={abortController}>
+      <RouteModal title="Add Task" description="Add a new task" abortController={abortController}>
         <form
           className="flex flex-col gap-2"
           autoComplete="off"
@@ -43,7 +42,7 @@ const AddTaskModal = () => {
             )}
           />
         </form>
-      </RouteModal> */}
+      </RouteModal>
     </>
   );
 };

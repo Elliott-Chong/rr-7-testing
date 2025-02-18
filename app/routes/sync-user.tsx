@@ -1,8 +1,9 @@
 import { getAuth } from "@clerk/react-router/ssr.server";
 import { redirect } from "react-router";
 import { Route } from "./+types/sync-user";
-import { db } from "@/.server/db";
 import { clerkClient } from "@/lib/clerkClient";
+import db from "@/.server/db/drizzle";
+import { users } from "@/.server/db/schema";
 
 export const loader = async (loaderArgs: Route.LoaderArgs) => {
   const { userId } = await getAuth(loaderArgs);
@@ -12,22 +13,22 @@ export const loader = async (loaderArgs: Route.LoaderArgs) => {
   }
 
   const user = await clerkClient.users.getUser(userId);
-  await db.user.upsert({
-    create: {
+  await db
+    .insert(users)
+    .values({
       id: userId,
       emailAddress: user.emailAddresses[0].emailAddress,
       firstName: user.firstName,
       lastName: user.lastName,
-    },
-    update: {
-      emailAddress: user.emailAddresses[0].emailAddress,
-      firstName: user.firstName,
-      lastName: user.lastName,
-    },
-    where: {
-      id: userId,
-    },
-  });
+    })
+    .onConflictDoUpdate({
+      target: users.id,
+      set: {
+        emailAddress: user.emailAddresses[0].emailAddress,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      },
+    });
 
   return redirect("/");
 };

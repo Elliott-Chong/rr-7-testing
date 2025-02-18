@@ -4,6 +4,7 @@ import { addTaskFormSchema } from "@/common/formSchema";
 import { trpc } from "@/common/trpc/react";
 import RouteModal from "@/components/route-modal";
 import { useZodForm } from "@/hooks/useZodForm";
+import { Button } from "@/components/ui/button";
 
 const AddTaskModal = () => {
   const { form } = useZodForm(addTaskFormSchema);
@@ -12,7 +13,8 @@ const AddTaskModal = () => {
 
   return (
     <>
-      <RouteModal title="Add Task" description="Add a new task" abortController={abortController}>
+      <Button>Hello</Button>
+      {/* <RouteModal title="Add Task" description="Add a new task" abortController={abortController}>
         <form
           className="flex flex-col gap-2"
           autoComplete="off"
@@ -41,7 +43,7 @@ const AddTaskModal = () => {
             )}
           />
         </form>
-      </RouteModal>
+      </RouteModal> */}
     </>
   );
 };

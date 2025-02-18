@@ -1,11 +1,14 @@
-import { db } from "@/.server/db";
+import { tasks } from "@/.server/db/schema";
 import { p } from "@/.server/trpc";
 import { addTaskFormSchema } from "@/common/formSchema";
 
-export const addTask = p.auth.input(addTaskFormSchema).mutation(async ({ ctx: { userId }, input: { content } }) => {
+export const addTask = p.auth.input(addTaskFormSchema).mutation(async ({ ctx: { db, userId }, input: { content } }) => {
   if (!userId) {
     return;
   }
 
-  await db.task.create({ data: { content, userId } });
+  await db.insert(tasks).values({
+    content,
+    userId
+  })
 });

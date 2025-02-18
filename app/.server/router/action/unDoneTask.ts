@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { db } from "@/.server/db";
 import { p } from "@/.server/trpc";
+import { tasks } from "@/.server/db/schema";
+import { eq } from "drizzle-orm";
 
 export const unDoneTask = p.auth
   .input(
@@ -8,6 +9,6 @@ export const unDoneTask = p.auth
       taskId: z.string(),
     }),
   )
-  .mutation(async ({ input: { taskId } }) => {
-    await db.task.update({ where: { id: taskId }, data: { done: false } });
+  .mutation(async ({ ctx: { db }, input: { taskId } }) => {
+    await db.update(tasks).set({ done: false }).where(eq(tasks.id, taskId));
   });

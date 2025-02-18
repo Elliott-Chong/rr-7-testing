@@ -1,18 +1,22 @@
-import { db } from "../db";
 import { p, t } from "../trpc";
 
 export const userRouter = t.router({
-  getMyUserInfo: p.public.query(async ({ ctx }) => {
-    if (!ctx.userId) {
+  getMyUserInfo: p.public.query(async ({ ctx: { myUserInfo, userId } }) => {
+    if (!userId) {
       return null;
     }
 
-    return ctx.myUserInfo;
+    return myUserInfo;
   }),
 
-  getUserList: p.public.query(async () => {
-    return await db.user.findMany({
-      select: { id: true, firstName: true, lastName: true, createAt: true },
+  getUserList: p.public.query(async ({ ctx: { db } }) => {
+    return await db.query.users.findMany({
+      columns: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        createdAt: true,
+      },
     });
   }),
 });

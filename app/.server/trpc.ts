@@ -2,7 +2,9 @@ import { getAuth } from "@clerk/react-router/ssr.server";
 import { TRPCError, initTRPC } from "@trpc/server";
 import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import SuperJSON from "superjson";
-import { db } from "./db";
+import db from "./db/drizzle";
+import { eq } from "drizzle-orm";
+import { users } from "./db/schema";
 
 // insert userInfo to trpc ctx
 export const createContext = async (ctx: FetchCreateContextFnOptions) => {
@@ -12,13 +14,11 @@ export const createContext = async (ctx: FetchCreateContextFnOptions) => {
     params: {},
   });
 
-  const myUserInfo = await db.user.findUnique({
-    where: {
-      id: userId ?? "",
-    },
-  });
+  const myUserInfo = await db.query.users.findFirst({
+    where: eq(users.id, userId ?? ""),
+  })
 
-  return { ...ctx, myUserInfo, userId: myUserInfo?.id };
+  return { ...ctx, db, myUserInfo, userId: myUserInfo?.id };
 };
 
 type Context = Awaited<ReturnType<typeof createContext>>;

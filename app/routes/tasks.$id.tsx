@@ -89,7 +89,7 @@ export default function PageMyTasks({ loaderData: { myTaskList, isSelf, user } }
       </Title>
       <div className="my-2 flex max-h-[70vh] flex-col gap-4 overflow-scroll p-4">
         {myTaskList.map((task) => {
-          const { id: taskId, content, done, createAt, updatedAt } = task;
+          const { id: taskId, content, done, createdAt, updatedAt } = task;
 
           return (
             <label key={taskId}>
@@ -119,7 +119,7 @@ export default function PageMyTasks({ loaderData: { myTaskList, isSelf, user } }
                 <div className="flex items-center gap-2">
                   <div className="flex flex-col">
                     <div className="text-sm font-light text-gray-400">
-                      create at {new Date(createAt).toLocaleString()}
+                      create at {new Date(createdAt).toLocaleString()}
                     </div>
                     <div className="text-sm font-light text-gray-400">
                       update at {new Date(updatedAt).toLocaleString()}

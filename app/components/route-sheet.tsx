@@ -6,11 +6,15 @@ type Props = {
   children: React.ReactNode;
   title: string;
   description: string;
+  abortController?: AbortController;
 };
 
-const RouteSheet = ({ children, title, description }: Props) => {
+const RouteSheet = ({ children, title, description, abortController }: Props) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
+  abortController?.signal?.addEventListener("abort", () => {
+    setOpen(false);
+  });
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>

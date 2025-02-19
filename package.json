@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "react-router dev",
-    "build": "bun run tc && cross-env NODE_ENV=production && bun prisma generate && react-router build",
+    "build": "bun run tc && cross-env NODE_ENV=production && react-router build",
     "start": "cross-env NODE_ENV=production PORT=3000 && react-router-serve ./build/server/index.js",
     "db:gen": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",

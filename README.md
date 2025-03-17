@@ -1,5 +1,7 @@
 # remix-t3-stack
 
+yay
+
 `t3` means typescript + tailwindcss + trpc, the name is from this [repo](https://github.com/t3-oss/create-t3-app)
 
 this is a full-stack todolist example using `remix-t3-stack`, aims to bring better DX to react developers.
